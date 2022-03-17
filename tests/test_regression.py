@@ -4,13 +4,13 @@ from torch.nn import Sigmoid
 from torch.optim import Adam
 from torch.utils.data import TensorDataset, DataLoader
 
-import evidential_dl as edl
+import evidentialdl as edl
 import torch.nn as nn
 import torch.nn.functional as F
 import torch
 
-from evidential_dl.layers import DenseNormalGamma
-from evidential_dl.losses.continuous import evidential_regression
+from evidentialdl.layers import DenseNormalGamma
+from evidentialdl.losses.continuous import evidential_regression
 
 
 def my_data(x_min, x_max, n, train=True):

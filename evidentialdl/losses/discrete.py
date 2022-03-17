@@ -1,8 +1,4 @@
 import torch
-import torch.nn as nn
-import torch.nn.functional as F
-import numpy as np
-from keras.utils.np_utils import to_categorical
 
 
 def KL(alpha, nb_classes):

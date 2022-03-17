@@ -3,9 +3,9 @@ import torchvision
 from keras.utils.np_utils import to_categorical
 from matplotlib import pyplot
 import torchvision.transforms as T
-from evidential_dl.layers import DenseDirichlet
+from evidentialdl.layers import DenseDirichlet
 import numpy as np
-from evidential_dl.losses.discrete import dirichlet_loss
+from evidentialdl.losses.discrete import dirichlet_loss
 
 # %%
 n_epochs = 4
