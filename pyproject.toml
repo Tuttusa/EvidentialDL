@@ -5,9 +5,9 @@ description = ""
 authors = ["PhilippeRacicot <10731763+Vaunorage@users.noreply.github.com>"]
 
 [tool.poetry.dependencies]
-python = "^3.8"
+python = "^3.7"
 torch = "^1.11.0"
-numpy = "^1.22.3"
+numpy = "^1.21.5"
 
 [tool.poetry.dev-dependencies]
 

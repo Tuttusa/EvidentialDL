@@ -9,7 +9,7 @@ setup(name='evidentialdl',
       license='MIT',
       packages=['evidentialdl'],
       install_requires=[
-          'torch',
-          'numpy'
+          'torch==1.11.0',
+          'numpy==1.21.5'
       ],
       zip_safe=False)
