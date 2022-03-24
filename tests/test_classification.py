@@ -5,7 +5,7 @@ from matplotlib import pyplot
 import torchvision.transforms as T
 from evidentialdl.layers import DenseDirichlet
 import numpy as np
-from evidentialdl.losses.discrete import dirichlet_loss
+from evidentialdl.losses import dirichlet_loss
 
 # %%
 n_epochs = 4

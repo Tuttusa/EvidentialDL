@@ -2,9 +2,6 @@ import torch.nn as nn
 import torch.nn.functional as F
 import torch
 
-__all__ = ['DenseNormal', 'DenseNormalGamma']
-
-
 class DenseNormal(nn.Module):
     def __init__(self, in_dim, out_dim):
         super(DenseNormal, self).__init__()

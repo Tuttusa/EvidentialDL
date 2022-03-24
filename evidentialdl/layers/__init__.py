@@ -1,2 +1,2 @@
-from continuous import *
-from discrete import *
+from continuous import DenseNormalGamma, DenseNormal
+from discrete import DenseDirichlet, DenseSigmoid

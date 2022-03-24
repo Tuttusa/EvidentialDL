@@ -2,9 +2,6 @@ import torch.nn as nn
 import torch.nn.functional as F
 import torch
 
-__all__ = ['DenseDirichlet', 'DenseSigmoid']
-
-
 class DenseDirichlet(nn.Module):
     def __init__(self, in_dim, out_dim):
         super(DenseDirichlet, self).__init__()
