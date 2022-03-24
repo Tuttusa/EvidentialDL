@@ -1,2 +1,2 @@
-from discrete import dirichlet_loss
-from continuous import evidential_regression_loss
+from evidentialdl.losses.discrete import dirichlet_loss
+from evidentialdl.losses.continuous import evidential_regression_loss
