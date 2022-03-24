@@ -71,7 +71,7 @@ def nig_reg(y, gamma, v, alpha, beta, omega=0.01, reduce=True, kl=False):
 
 def evidential_regression(coeff=1.0):
     def func(y_true, evidential_output):
-        gamma, v, alpha, beta = evidential_output.chunk(4, dim=-1)
+        gamma, v, alpha, beta, aleatoric, epistemic = evidential_output
         loss_nll = nig_nll(y_true, gamma, v, alpha, beta)
         loss_reg = nig_reg(y_true, gamma, v, alpha, beta)
         return loss_nll + coeff * loss_reg

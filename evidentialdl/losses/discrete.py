@@ -15,25 +15,21 @@ def KL(alpha, nb_classes):
     return kl
 
 
-def dirichlet_loss(p, alpha, nb_classes, global_step, annealing_step):
-    """
+def dirichlet_loss(nb_classes):
+    def func(target, evidential_output, global_step, annealing_step):
+        alpha, preds, uncertainty = evidential_output
 
-    :param p:
-    :param alpha:
-    :param nb_classes:
-    :param global_step:
-    :param annealing_step: nb_classes * N_batches (constant)
-    :return:
-    """
-    S = torch.sum(alpha, dim=1, keepdim=True)
-    E = alpha - 1
-    m = alpha / S
+        S = torch.sum(alpha, dim=1, keepdim=True)
+        E = alpha - 1
+        m = alpha / S
 
-    A = torch.sum((p - m) ** 2, dim=1, keepdim=True)
-    B = torch.sum(alpha * (S - alpha) / (S * S * (S + 1)), dim=1, keepdim=True)
+        A = torch.sum((target - m) ** 2, dim=1, keepdim=True)
+        B = torch.sum(alpha * (S - alpha) / (S * S * (S + 1)), dim=1, keepdim=True)
 
-    annealing_coef = torch.minimum(torch.tensor(1.0), torch.tensor(global_step / annealing_step))
+        annealing_coef = torch.minimum(torch.tensor(1.0), torch.tensor(global_step / annealing_step))
 
-    alp = E * (1 - p) + 1
-    C = annealing_coef * KL(alp, nb_classes)
-    return torch.mean((A + B) + C)
+        alp = E * (1 - target) + 1
+        C = annealing_coef * KL(alp, nb_classes)
+        return torch.mean((A + B) + C)
+
+    return func

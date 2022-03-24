@@ -65,18 +65,18 @@ train_losses = []
 train_counter = []
 test_losses = []
 test_counter = [i * len(train_loader.dataset) for i in range(n_epochs + 1)]
-
+K = 10
+criterion = dirichlet_loss(K)
 
 def train(epoch):
-    K= 10
     network.train()
     global_step = 0
     n_batches = len(train_loader)
     for batch_idx, (data, target) in enumerate(train_loader):
         optimizer.zero_grad()
         target = torch.from_numpy(to_categorical(target, num_classes=K))
-        alpha, probs = network(data)
-        loss = dirichlet_loss(target, alpha, K, global_step, K * n_batches)
+        yhat = network(data)
+        loss = criterion(target, yhat, global_step, K * n_batches)
         loss.backward()
         optimizer.step()
         global_step += 1
@@ -86,8 +86,8 @@ def train(epoch):
                        100. * batch_idx / len(train_loader), loss.item()))
             train_losses.append(loss.item())
             train_counter.append((batch_idx * 64) + ((epoch - 1) * len(train_loader.dataset)))
-            torch.save(network.state_dict(), './results/model.pth')
-            torch.save(optimizer.state_dict(), './results/optimizer.pth')
+            # torch.save(network.state_dict(), './results/model.pth')
+            # torch.save(optimizer.state_dict(), './results/optimizer.pth')
 
 
 def test():
@@ -96,7 +96,7 @@ def test():
     correct = 0
     with torch.no_grad():
         for data, target in test_loader:
-            alpha, preds = network(data)
+            alpha, preds, uncertainty = network(data)
             test_loss += F.nll_loss(preds, target, size_average=False).item()
             pred = preds.data.max(1, keepdim=True)[1]
             correct += pred.eq(target.data.view_as(pred)).sum()

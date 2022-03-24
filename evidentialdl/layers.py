@@ -1,6 +1,8 @@
 import torch.nn as nn
 import torch.nn.functional as F
 import torch
+import scipy
+from scipy.stats import entropy
 
 
 class DenseNormal(nn.Module):
@@ -36,7 +38,10 @@ class DenseNormalGamma(nn.Module):
         alpha = self.evidence(logalpha) + 1
         beta = self.evidence(logbeta)
 
-        return torch.cat([mu, v, alpha, beta], dim=-1)
+        aleatoric = beta / (alpha - 1)
+        epistemic = beta / v * (alpha - 1)
+
+        return mu, v, alpha, beta, aleatoric, epistemic
 
 
 class DenseDirichlet(nn.Module):
@@ -52,9 +57,15 @@ class DenseDirichlet(nn.Module):
         output = self.dense(x)
         evidence = torch.exp(output)
         alpha = evidence + 1
-        prob = alpha / torch.unsqueeze(torch.sum(alpha, dim=1), -1)
 
-        return alpha, prob
+        S = torch.unsqueeze(torch.sum(alpha, dim=1), -1)
+        K = alpha.shape[-1]
+
+        prob = alpha / S
+        uncertainty = K / S
+        # total_uncert = entropy(prob)
+
+        return alpha, prob, uncertainty
 
 
 class DenseSigmoid(nn.Module):
