@@ -69,7 +69,7 @@ def nig_reg(y, gamma, v, alpha, beta, omega=0.01, reduce=True, kl=False):
     return torch.mean(reg) if reduce else reg
 
 
-def evidential_regression(coeff=1.0):
+def evidential_regression_loss(coeff=1.0):
     def func(y_true, evidential_output):
         gamma, v, alpha, beta, aleatoric, epistemic = evidential_output
         loss_nll = nig_nll(y_true, gamma, v, alpha, beta)

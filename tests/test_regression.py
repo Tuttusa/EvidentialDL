@@ -10,7 +10,7 @@ import torch.nn.functional as F
 import torch
 
 from evidentialdl.layers import DenseNormalGamma
-from evidentialdl.losses.continuous import evidential_regression
+from evidentialdl.losses.continuous import evidential_regression_loss
 
 
 def my_data(x_min, x_max, n, train=True):
@@ -74,7 +74,7 @@ class MLP(nn.Module):
 
 model = MLP(x_train.shape[-1])
 
-criterion = evidential_regression(coeff=1e-2)
+criterion = evidential_regression_loss(coeff=1e-2)
 optimizer = Adam(model.parameters(), lr=5e-4)
 
 #%%

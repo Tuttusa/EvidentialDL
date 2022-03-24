@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "evidentialdl"
-version = "0.1.0"
+version = "0.2.1"
 description = ""
 authors = ["PhilippeRacicot <10731763+Vaunorage@users.noreply.github.com>"]
 
