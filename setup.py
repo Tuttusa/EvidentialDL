@@ -1,7 +1,7 @@
 from setuptools import setup
 
 setup(name='evidentialdl',
-      version='0.2.3',
+      version='0.2.4',
       description='Evidential Deep learning implementation Pytorch',
       url='https://github.com/Tuttusa/EvidentialDL',
       author='Vaunorage',
