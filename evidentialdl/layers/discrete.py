@@ -1,6 +1,7 @@
 import torch.nn as nn
 import torch.nn.functional as F
 import torch
+from torch.distributions import Categorical
 
 class DenseDirichlet(nn.Module):
     def __init__(self, in_dim, out_dim):
@@ -20,10 +21,10 @@ class DenseDirichlet(nn.Module):
         K = alpha.shape[-1]
 
         prob = alpha / S
-        uncertainty = K / S
-        # total_uncert = entropy(prob)
+        epistemic_uncertainty = K / S
+        aleatoric_uncertainty = Categorical(probs = p_tensor).entropy()
 
-        return alpha, prob, uncertainty
+        return alpha, prob, epistemic_uncertainty, aleatoric_uncertainty
 
 
 class DenseSigmoid(nn.Module):
