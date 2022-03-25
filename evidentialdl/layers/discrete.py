@@ -3,6 +3,14 @@ import torch.nn.functional as F
 import torch
 from torch.distributions import Categorical
 
+
+def entropy(probs):
+    log_probs = -torch.log(probs)
+    entropy = -torch.sum(probs * log_probs, axis=-1, keepdim=True)
+
+    return entropy
+
+
 class DenseDirichlet(nn.Module):
     def __init__(self, in_dim, out_dim):
         super(DenseDirichlet, self).__init__()
@@ -22,7 +30,7 @@ class DenseDirichlet(nn.Module):
 
         prob = alpha / S
         epistemic_uncertainty = K / S
-        aleatoric_uncertainty = Categorical(probs = p_tensor).entropy()
+        aleatoric_uncertainty = entropy(prob)
 
         return alpha, prob, epistemic_uncertainty, aleatoric_uncertainty
 

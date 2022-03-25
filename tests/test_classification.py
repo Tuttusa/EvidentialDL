@@ -96,7 +96,7 @@ def test():
     correct = 0
     with torch.no_grad():
         for data, target in test_loader:
-            alpha, preds, uncertainty = network(data)
+            alpha, preds, eps_un, alea_un = network(data)
             test_loss += F.nll_loss(preds, target, size_average=False).item()
             pred = preds.data.max(1, keepdim=True)[1]
             correct += pred.eq(target.data.view_as(pred)).sum()
@@ -123,8 +123,8 @@ rotated_image = rotater(mnist_data[0][0])
 # pyplot.show()
 
 with torch.no_grad():
-    alpha1, preds1 = network(torch.unsqueeze(mnist_transforms(rotated_image), 0))
-    alpha, preds = network(torch.unsqueeze(mnist_transforms(real_image), 0))
+    alpha1, preds1, eps_un1, alea_un1 = network(torch.unsqueeze(mnist_transforms(rotated_image), 0))
+    alpha, preds, eps_un, alea_un = network(torch.unsqueeze(mnist_transforms(real_image), 0))
 
 #%%
 d_alpha1 = np.random.dirichlet(torch.squeeze(alpha1), 20)

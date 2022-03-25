@@ -17,7 +17,7 @@ def KL(alpha, nb_classes):
 
 def dirichlet_loss(nb_classes):
     def func(target, evidential_output, global_step, annealing_step):
-        alpha, preds, uncertainty = evidential_output
+        alpha, preds, epistemic_uncertainty, aleatoric_uncertainty = evidential_output
 
         S = torch.sum(alpha, dim=1, keepdim=True)
         E = alpha - 1
