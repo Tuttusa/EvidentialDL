@@ -127,6 +127,7 @@ with torch.no_grad():
     alpha, preds, eps_un, alea_un = network(torch.unsqueeze(mnist_transforms(real_image), 0))
 
 #%%
+# here we can see the distribution of the alphas from the
 d_alpha1 = np.random.dirichlet(torch.squeeze(alpha1), 20)
 d_alpha = np.random.dirichlet(torch.squeeze(alpha), 20)
 
