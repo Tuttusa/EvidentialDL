@@ -16,9 +16,9 @@ class DenseDirichlet(nn.Module):
         super(DenseDirichlet, self).__init__()
 
         self.in_dim = int(in_dim)
-        self.out_dim = int(out_dim)
+        self.out_features = int(out_dim)
 
-        self.dense = nn.Linear(self.in_dim, self.out_dim)
+        self.dense = nn.Linear(self.in_dim, self.out_features)
 
     def forward(self, x):
         output = self.dense(x)
