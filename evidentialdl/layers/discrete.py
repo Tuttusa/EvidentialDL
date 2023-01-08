@@ -30,7 +30,7 @@ class DenseDirichlet(nn.Module):
 
         prob = alpha / S
         epistemic_uncertainty = K / S
-        aleatoric_uncertainty = entropy(prob)
+        aleatoric_uncertainty = -entropy(prob)
 
         return alpha, prob, epistemic_uncertainty, aleatoric_uncertainty
 

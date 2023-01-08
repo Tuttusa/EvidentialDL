@@ -32,4 +32,10 @@ def dirichlet_loss(nb_classes):
         C = annealing_coef * KL(alp, nb_classes)
         return torch.mean((A + B) + C)
 
+        """
+        check nb_classes
+        check softmax for alp
+        kl divergence
+        """
+
     return func

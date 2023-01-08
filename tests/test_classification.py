@@ -6,6 +6,8 @@ import torchvision.transforms as T
 from evidentialdl.layers import DenseDirichlet
 import numpy as np
 from evidentialdl.losses import dirichlet_loss
+import wandb
+
 
 # %%
 n_epochs = 4
@@ -32,6 +34,8 @@ test_loader = torch.utils.data.DataLoader(
     torchvision.datasets.MNIST('./files/', train=False, download=True,
                                transform=mnist_transforms),
     batch_size=batch_size_test, shuffle=True)
+
+wandb.init(project="evidentialdl", entity="vaunorage")
 
 # %%
 import torch.nn as nn
@@ -60,6 +64,8 @@ class Net(nn.Module):
 network = Net()
 optimizer = optim.SGD(network.parameters(), lr=learning_rate, momentum=momentum)
 
+wandb.watch(network, log_freq=100)
+
 # %%
 train_losses = []
 train_counter = []
@@ -77,6 +83,7 @@ def train(epoch):
         target = torch.from_numpy(to_categorical(target, num_classes=K))
         yhat = network(data)
         loss = criterion(target, yhat, global_step, K * n_batches)
+        wandb.log({"loss": loss})
         loss.backward()
         optimizer.step()
         global_step += 1
